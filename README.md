@@ -13,10 +13,12 @@
   + 主题式学习
   + 流程式学习
   + 排错式学习
-
 +  [python-cookbook](python-cookbook\README.md) 
 
   + 每个章节的思维导图
   + 每个章节的代码实现
-
-  
++  数据库
+   +  mysql
+   +  postgreSQL
+   +  redis
++  web
