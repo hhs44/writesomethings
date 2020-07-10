@@ -58,7 +58,7 @@ def open(filename,mode):
     return file
 
 fp = open("sample/test.gif","r")
-print len(fp.read()), "bytes"
+print(len(fp.read()), "bytes")
 ```
 
 ## 3. 重新实现str.strip()，注意不能使用string.*strip()
@@ -126,8 +126,10 @@ def leftStr(string, split=' '):
   ## 5. deepcopy 和 copy的区别？
 
 + copy:
+  
   + 当最外层对象为可变类型时，copy后得到的对象指向新的内存空间，当最外层的对象为不可变类型时，copy后得到的对象指向原对象的内存空间（注意：浅拷贝的对象的最外层是否是可变类型）
 + deepcopy：除拷贝对象本身，还拷贝对象中引用的其他对象
+  
   + 拷贝的内容中只要有一个是个可变类型，那么deepcopy一定是深拷贝
 
 ## 6. os.path和sys.path的区别？
