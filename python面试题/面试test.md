@@ -79,3 +79,46 @@
 3. 平时是如何学习的?有关注哪些技术?
 4. Docker的了解，常用命令，如何暴露端口
 5. 对ERP了解吗？Odoo了解吗?
+
+
+
+
+
+## 语言层面
+
+1.精通Python语言，了解Python高级特性，了解设计模式，能够读懂开源框架代码。
+2.前端要熟悉HTML/CSS/JS，了解ES6特性，至少会使用一个前端框架，例如JQuery或者Vue。
+
+## 数据库
+
+1.关系型数据库Mysql、Postgresql，性能调优
+
+2. 非关系型数据库Mongodb（可选）
+3. 缓存型数据库Redis （必备）
+
+## Python框架
+
+掌握Flask、Django、Tornado或其他Web框架，熟悉或者精通其中任意一个即可，能够了解这些框架的底层实现原理和机制。
+
+## Web
+
+熟悉TCP/UDP/HTTP协议等基础理论知识。
+熟悉web常见的验证方式，如Basic Authentication、Token Authentication和JWT验证，熟悉第三方登录如OAuth2.0。
+熟悉RESTful API的设计理念，熟悉CRUD基本操作
+了解Web Sockets
+
+## 搜索引擎
+
+了解或者熟悉ElasticSearch、Solr、Sphinx
+
+## 消息队列
+
+了解RabbitMQ、Kafka
+
+## 其他
+
+熟悉Docker，能够使用Docker部署项目
+
+## 系统
+
+熟悉Linux的常见操作，熟悉云计算平台如阿里云、腾讯云、AWS，熟悉Nginx或者Apache的常见配置，能够熟练部署项目到Linux服务器上
