@@ -111,6 +111,7 @@ http协议中的Cache-Control头，用于指定请求和响应的缓存机制
 ## django中的缓存
 
 + cache_page()：单个视图的缓存
++ 
 + 自定义缓存
 
 ## 缓存替换策略
