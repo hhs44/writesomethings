@@ -270,6 +270,65 @@ celery中的定时任务
 
 # 认证和访问控制
 
+## RBAC
+
+```python
+"""
+模型案例 + 中间件模板
+"""
+# 更丰富的案例
+# 资源
+class Resource(models.Model):
+    name = models.CharField(max_length=255)
+
+
+# 操作
+class Operation(models.Model):
+    name = models.CharField(max_length=255)
+
+
+# 规则
+class Rule(models.Model):
+    name = models.CharField(max_length=255)
+    resource_id = models.IntegerField(max_length=20)
+    resource = models.CharField(max_length=255)
+    operation_id = models.IntegerField(max_length=255)
+    operation = models.CharField(max_length=255)
+
+
+# 角色
+class Role(models):
+    name = models.CharField(max_length=255)
+    rules = models.ManyToManyField(Rule)
+
+
+# 用户角色
+class UserRole(models.Model):
+    user = models.ForeignKey(User)
+    role = models.ForeignKey(Role)
+    
+# 中间件模板
+def rbac_authorize(func):
+    @wraps(func)
+    def _decorator(request, *args, **kwargs):
+        # 获取资源、操作、和用户
+        resource, operation, user = get_basic_info(request)
+        # 获取规则
+        rule = get_rule_by_resource_operation(resource, operation)
+        # 获取拥有规则的角色
+        rule_list_a = get_role_list_by_rule(rule)
+        # 获取用户的角色
+        rule_list_b = get_role_by_user(user)
+        # 如果角色集合有交集，则通过验证，否者拒绝请求
+        if have_in_common(role_list_a, role_list_b):
+            return func(request, *args, **kwargs)
+        else:
+            return HttpResponse("Unauthorized", status_code=403)
+    return _decorator
+```
+
+
+
 # 部署
 
 # 负载均衡
