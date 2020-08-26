@@ -4,7 +4,13 @@
 
 
 
-# 数据库对接
+# 数据库模块
+
+## 可用数据库方案
+
++ mysql
++ postgresql
++ mongodb
 
 ## 连接池
 
@@ -72,7 +78,7 @@
 + 垂直分库
   + 大型数据，分库分表才有意义
 
-## 优化
+## mysql优化
 
 + explain()方法了解queryset的细节
 + 使用索引，对经常查询的字段加上索引
@@ -110,8 +116,26 @@ http协议中的Cache-Control头，用于指定请求和响应的缓存机制
 
 ## django中的缓存
 
-+ cache_page()：单个视图的缓存
-+ 
++ 缓存
+
+  + 时间和空间是不可调和的矛盾，软件和硬件在逻辑上是等效
+
+  + 缓存是典型的空间换时间策略，池化技术（线程池、连接池等）也是典型的空间换时间策略
+
+  + 例如：数据库连接池就是通过提前创建和保留数据库连接，减少创建释放连接时TCP三次握手四次挥手的开销
+
+    ```
+    1. 声明式缓存
+    @cache_page(timeout=...) ---> FBV
+    @method_decorator(cache_page(timeout=...), name='list') ---> CBV
+    2. 编程式缓存
+    django.core.cache.caches['...'] ---> set / get
+    django_redis.get_redis_connection ---> Redis ---> 几乎所有命令
+    可能需要手动序列化数据 pickle / json
+    ```
+
+    
+
 + 自定义缓存
 
 ## 缓存替换策略
@@ -212,7 +236,7 @@ https://zhuanlan.zhihu.com/p/131517931
   - 定期过期：每隔一定的时间，会扫描一定数量的数据库的expires字典中一定数量的key，并清除其中已过期的key。该策略是前两者的一个折中方案。通过调整定时扫描的时间间隔和每次扫描的限定耗时，可以在不同情况下使得CPU和内存资源达到最优的平衡效果。
   - (expires字典会保存所有设置了过期时间的key的过期时间数据，其中，key是指向键空间中的某个键的指针，value是该键的毫秒精度的UNIX时间戳表示的过期时间。键空间是指该Redis集群中保存的所有键。)
 
-# 消息队列
+# 消息队列（削峰和异步化）
 
 + 监听
 + 发送
@@ -375,3 +399,22 @@ def rbac_authorize(func):
 + 传入响应对象生成writer，65536是单个sheet的上限
 + 写入文件内容
 + 返回响应
+
+## 中间件技术
+
+### 接口访问限流
+
+```python
+# 修改REST_FRAMEWOKR配置
+'DEFAULT_THROTTLE_CLASSES': (
+'rest_framework.throttling.AnonRateThrottle',
+'rest_framework.throttling.UserRateThrottle',
+),
+'DEFAULT_THROTTLE_RATES': {
+'anon': '30/min',
+'user': '10000/day',
+}
+# FBV ---> @throttle_classes((...))
+# CBV ---> throttle_classes = (...)
+```
+
